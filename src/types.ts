@@ -1,9 +1,13 @@
 export interface LeadData {
   nome: string;
-  email: string;
   whatsapp: string;
-  endereco?: string;
-  instagram?: string;
+  cpf: string;
+  cep: string;
+  endereco: string;
+  instagram: string;
+  consumoCacau?: string;
+  compromissoDesafio?: string;
+  email?: string;
   empresa?: string;
   segmento?: string;
   trabalhaComCacau?: string;
@@ -86,6 +90,7 @@ export interface Question {
   type: QuestionType;
   title: string;
   placeholder?: string;
+  helperText?: string;
   options?: string[];
   required?: boolean;
   dependsOn?: {

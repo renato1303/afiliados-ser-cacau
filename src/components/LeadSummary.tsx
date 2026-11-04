@@ -14,9 +14,12 @@ export default function LeadSummary({ lead }: SummaryProps) {
   const summaryFields = [
     { label: 'Nome Completo', value: safeLead.nome || 'Não informado', icon: User, color: 'text-[#008060]' },
     { label: 'WhatsApp', value: safeLead.whatsapp || safeLead.telefone || 'Não informado', icon: Phone, color: 'text-[#008060]' },
-    { label: 'E-mail', value: safeLead.email || 'Não informado', icon: Mail, color: 'text-[#008060]' },
-    { label: 'Endereço', value: safeLead.endereco || 'Não informado', icon: Building2, color: 'text-[#14B8A6]' },
+    { label: 'CPF', value: safeLead.cpf || 'Não informado', icon: Mail, color: 'text-[#008060]' },
+    { label: 'CEP', value: safeLead.cep || 'Não informado', icon: Building2, color: 'text-[#14B8A6]' },
+    { label: 'Endereço Completo', value: safeLead.endereco || 'Não informado', icon: Building2, color: 'text-[#14B8A6]' },
     { label: 'Instagram', value: safeLead.instagram || 'Não informado', icon: Briefcase, color: 'text-[#14B8A6]' },
+    { label: 'Já Consome Cacau Puro?', value: safeLead.consumoCacau || 'Não informado', icon: Activity, color: 'text-[#008060]' },
+    { label: 'Topa Compromisso (28 dias)?', value: safeLead.compromissoDesafio || 'Não informado', icon: Zap, color: 'text-[#008060]' },
   ];
 
   return (

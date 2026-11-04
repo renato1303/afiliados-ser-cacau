@@ -11,34 +11,68 @@ export const QUESTIONS_LIST: Question[] = [
   },
   {
     id: 'p2',
-    variable: 'email',
-    type: 'email',
-    title: 'Qual é o seu e-mail?',
-    placeholder: 'seu@email.com',
-    required: true,
-  },
-  {
-    id: 'p3',
     variable: 'whatsapp',
     type: 'tel',
-    title: 'Qual é o seu número de WhatsApp?',
+    title: 'Qual é o seu WhatsApp com DDD?',
     placeholder: '(11) 99999-9999',
     required: true,
   },
   {
-    id: 'p4',
-    variable: 'endereco',
+    id: 'p3',
+    variable: 'cpf',
     type: 'text',
-    title: 'Qual é o seu endereço?',
-    placeholder: 'Rua, número, cidade - UF',
+    title: 'Qual é o seu CPF?',
+    placeholder: '000.000.000-00',
+    helperText: 'Usamos só para o envio e o cadastro do seu kit.',
+    required: true,
+  },
+  {
+    id: 'p4',
+    variable: 'cep',
+    type: 'text',
+    title: 'Qual é o seu CEP?',
+    placeholder: '00000-000',
     required: true,
   },
   {
     id: 'p5',
+    variable: 'endereco',
+    type: 'text',
+    title: 'Qual é o seu endereço completo?',
+    placeholder: 'Rua, número, complemento, bairro, cidade - UF',
+    required: true,
+  },
+  {
+    id: 'p6',
     variable: 'instagram',
     type: 'text',
-    title: 'Qual é o @ do seu perfil do Instagram?',
+    title: 'Qual é o @ do seu Instagram?',
     placeholder: '@seuperfil',
+    helperText: 'Seu perfil precisa estar aberto para a gente acompanhar o desafio.',
+    required: true,
+  },
+  {
+    id: 'p7',
+    variable: 'consumoCacau',
+    type: 'select',
+    title: 'Você já consome cacau puro?',
+    options: [
+      'Nunca provei, mas tenho curiosidade',
+      'Já provei algumas vezes',
+      'Consumo de vez em quando',
+      'Faz parte da minha rotina'
+    ],
+    required: true,
+  },
+  {
+    id: 'p8',
+    variable: 'compromissoDesafio',
+    type: 'select',
+    title: 'Durante 28 dias, o desafio pede 1 foto por dia nas suas redes e 3 vídeos curtos (começo, meio e fim). Você consegue topar?',
+    options: [
+      'Sim, consigo me comprometer',
+      'Acho que consigo, mas quero ver as regras primeiro'
+    ],
     required: true,
   }
 ];
@@ -90,8 +124,12 @@ export const INITIAL_LEAD_DATA: LeadData = {
   nome: '',
   email: '',
   whatsapp: '',
+  cpf: '',
+  cep: '',
   endereco: '',
   instagram: '',
+  consumoCacau: '',
+  compromissoDesafio: '',
   empresa: '',
   segmento: '',
   trabalhaComCacau: '',
@@ -362,6 +400,49 @@ export function validateCNPJ(cnpj: string): boolean {
   return true;
 }
 
+export function maskCPF(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+  return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}`;
+}
+
+export function validateCPF(cpf: string): boolean {
+  const clean = cpf.replace(/\D/g, '');
+  if (clean.length !== 11) return false;
+  if (/^(\d)\1{10}$/.test(clean)) return false;
+  
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(clean.charAt(i), 10) * (10 - i);
+  }
+  let rev = 11 - (sum % 11);
+  if (rev === 10 || rev === 11) rev = 0;
+  if (rev !== parseInt(clean.charAt(9), 10)) return false;
+  
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += parseInt(clean.charAt(i), 10) * (11 - i);
+  }
+  rev = 11 - (sum % 11);
+  if (rev === 10 || rev === 11) rev = 0;
+  if (rev !== parseInt(clean.charAt(10), 10)) return false;
+  
+  return true;
+}
+
+export function maskCEP(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 8);
+  if (digits.length <= 5) return digits;
+  return `${digits.slice(0, 5)}-${digits.slice(5, 8)}`;
+}
+
+export function validateCEP(cep: string): boolean {
+  const clean = cep.replace(/\D/g, '');
+  return clean.length === 8;
+}
+
 export function buildFormattedMessageText(lead?: LeadData | Partial<LeadData> | null): string {
   if (!lead) return '';
   const score = lead.leadScore !== undefined && lead.leadScore !== null
@@ -377,28 +458,27 @@ export function buildFormattedMessageText(lead?: LeadData | Partial<LeadData> | 
   const lines: string[] = [
     `Olá, sou ${lead.nome || 'Cliente'}.`,
     ``,
-    `Acabei de preencher as informações no formulário Será Cacau!`,
+    `Acabei de me inscrever no desafio Será Cacau!`,
     ``,
     `📋 DADOS DO CADASTRO:`,
     `• Nome: ${lead.nome || 'Não informado'}`,
-    `• E-mail: ${lead.email || 'Não informado'}`,
     `• WhatsApp: ${phone}`,
+    `• CPF: ${lead.cpf || 'Não informado'}`,
+    `• CEP: ${lead.cep || 'Não informado'}`,
     `• Endereço: ${lead.endereco || 'Não informado'}`,
     `• Instagram: ${lead.instagram || 'Não informado'}`,
+    `• Já consome cacau puro?: ${lead.consumoCacau || 'Não informado'}`,
+    `• Topa compromisso do desafio (28 dias): ${lead.compromissoDesafio || 'Não informado'}`,
   ];
 
   if (estadoLabel) {
     lines.push(`• Localização (DDD): ${estadoLabel}${dddInfo.regiao ? ` - ${dddInfo.regiao}` : ''}`);
   }
 
-  if (lead.dataReuniao) {
-    lines.push(`• Reunião Agendada: ${lead.dataReuniao} às ${lead.horaReuniao || ''}`);
-  }
-
   lines.push(``);
   lines.push(`📊 Score de Qualificação: ${score}%`);
   lines.push(``);
-  lines.push(`Desejo dar prosseguimento e conversar com o especialista responsável!`);
+  lines.push(`Desejo dar prosseguimento ao meu cadastro no desafio!`);
 
   return lines.join('\n');
 }
@@ -411,10 +491,13 @@ export function buildWhatsAppMessage(lead?: LeadData | Partial<LeadData> | null)
 export function calculateLeadScore(lead?: Partial<LeadData> | null): number {
   if (!lead) return 0;
   let score = 0;
-  if (lead.nome) score += 20;
-  if (lead.email) score += 20;
-  if (lead.whatsapp) score += 20;
-  if (lead.endereco) score += 20;
-  if (lead.instagram) score += 20;
-  return score;
+  if (lead.nome) score += 15;
+  if (lead.whatsapp) score += 15;
+  if (lead.cpf) score += 15;
+  if (lead.cep) score += 10;
+  if (lead.endereco) score += 15;
+  if (lead.instagram) score += 10;
+  if (lead.consumoCacau) score += 10;
+  if (lead.compromissoDesafio) score += 10;
+  return Math.min(100, score);
 }

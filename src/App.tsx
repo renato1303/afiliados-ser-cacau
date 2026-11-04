@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { 
   QUESTIONS_LIST, INITIAL_LEAD_DATA, maskPhone, validateEmail, 
-  validatePhone, maskCNPJ, validateCNPJ, buildWhatsAppMessage, buildFormattedMessageText, DEFAULT_INTEGRATIONS_CONFIG, calculateLeadScore, getDDDInfo, getResolvedIntegrationsConfig 
+  validatePhone, maskCNPJ, validateCNPJ, maskCPF, validateCPF, maskCEP, validateCEP, buildWhatsAppMessage, buildFormattedMessageText, DEFAULT_INTEGRATIONS_CONFIG, calculateLeadScore, getDDDInfo, getResolvedIntegrationsConfig 
 } from './data';
 import { LeadData, Question, IntegrationConfig, BookedMeeting } from './types';
 import { createClient } from '@supabase/supabase-js';
@@ -271,11 +271,14 @@ export default function App() {
     }
   }, [currentStep, currentQuestion]);
 
-  // Handle WhatsApp Brazilian Formatter
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    if (currentQuestion?.type === 'tel') {
+    if (currentQuestion?.type === 'tel' || currentQuestion?.variable === 'whatsapp') {
       value = maskPhone(value);
+    } else if (currentQuestion?.variable === 'cpf') {
+      value = maskCPF(value);
+    } else if (currentQuestion?.variable === 'cep') {
+      value = maskCEP(value);
     }
     setInputValue(value);
     if (validationError) setValidationError(null);
@@ -376,6 +379,20 @@ export default function App() {
     if (trimmedValue && currentQuestion.type === 'tel') {
       if (!validatePhone(trimmedValue)) {
         setValidationError('Insira um número de WhatsApp com DDD válido. Ex: (11) 99999-9999.');
+        return false;
+      }
+    }
+
+    if (trimmedValue && currentQuestion.variable === 'cpf') {
+      if (!validateCPF(trimmedValue)) {
+        setValidationError('Por favor, insira um CPF válido.');
+        return false;
+      }
+    }
+
+    if (trimmedValue && currentQuestion.variable === 'cep') {
+      if (!validateCEP(trimmedValue)) {
+        setValidationError('Por favor, insira um CEP válido com 8 dígitos.');
         return false;
       }
     }
@@ -776,9 +793,10 @@ export default function App() {
     // Sheet Lead formatted to match the exact Google Sheet columns and Webhook payloads:
     const formattedLead = {
       nome: finalLead.nome || '',
-      email: finalLead.email || '',
       whatsapp: finalLead.whatsapp || finalLead.telefone || '',
       telefone: finalLead.whatsapp || finalLead.telefone || '',
+      cpf: finalLead.cpf || '',
+      cep: finalLead.cep || '',
       endereco: finalLead.endereco || '',
       instagram: finalLead.instagram || '',
       leadScore: rawScore,
@@ -804,8 +822,9 @@ export default function App() {
       // Column name keys for backwards compatibility and various Sheets formats
       'Data/hora': dataHoraFormatted,
       'Nome': finalLead.nome || '',
-      'E-mail': finalLead.email || '',
       'WhatsApp': finalLead.whatsapp || finalLead.telefone || '',
+      'CPF': finalLead.cpf || '',
+      'CEP': finalLead.cep || '',
       'Endereço': finalLead.endereco || '',
       'Instagram': finalLead.instagram || '',
       'ID': finalLead.id || '',
@@ -823,8 +842,9 @@ export default function App() {
     const orderedRow = [
       dataHoraFormatted,
       finalLead.nome || '',
-      finalLead.email || '',
       finalLead.whatsapp || finalLead.telefone || '',
+      finalLead.cpf || '',
+      finalLead.cep || '',
       finalLead.endereco || '',
       finalLead.instagram || '',
       finalLead.id || '',
@@ -1440,29 +1460,28 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
               className="w-full text-center space-y-10 py-8 md:py-20 relative z-10"
               id="welcome-screen"
             >
-              {/* Headline & Subtitle */}
+              {/* Headline */}
               <div className="space-y-6 max-w-4xl mx-auto w-full px-2">
-                <h1 className="font-display font-semibold text-2xl sm:text-3xl md:text-[2.5rem] text-gray-900 tracking-tight leading-tight max-w-3xl mx-auto">
-                  Leve o cacau 100% da Bahia{' '}
+                <h1 className="font-display font-semibold text-2xl sm:text-3xl md:text-[2.2rem] text-gray-900 tracking-tight leading-tight max-w-3xl mx-auto">
+                  Receba 2 potes de gotas de cacau 100% em casa, com frete grátis.{' '}
                   <span className="text-[#008060] block sm:inline">
-                    para quem já confia em você e ganhe comissão por cada venda.
+                    Em troca, você bebe uma xícara por dia, mostra nas suas redes e conta como foi
                   </span>
                 </h1>
-                <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto font-sans font-normal leading-relaxed antialiased px-2">
-                  Preencha o formulário e descubra se você tem o perfil para ser afiliada Será Cacau.
-                </p>
               </div>
-
-              {/* Principal CTA Button */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 px-2">
+              {/* Principal CTA Button & Subtitle */}
+              <div className="flex flex-col items-center justify-center gap-4 pt-2 px-2">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="w-full sm:w-auto px-10 py-4 bg-[#008060] hover:bg-[#00664d] text-white font-semibold text-[15px] tracking-wide rounded-2xl transition-all group flex items-center justify-center gap-2.5 hover:translate-y-[-1px] active:translate-y-[0px] cursor-pointer shadow-sm"
+                  className="w-full sm:w-auto px-10 py-4 bg-[#008060] hover:bg-[#00664d] text-white font-semibold text-base sm:text-lg tracking-wide rounded-2xl transition-all group flex items-center justify-center gap-2.5 hover:translate-y-[-1px] active:translate-y-[0px] cursor-pointer shadow-sm"
                   id="btn-start"
                 >
-                  <span>Quero ser Afiliada</span>
+                  <span>Quero me inscrever</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
+                <p className="text-[10px] sm:text-xs font-semibold text-[#008060] font-sans tracking-widest uppercase pt-1">
+                  Vagas Limitadas
+                </p>
               </div>
 
               {/* Minor metadata */}
@@ -1488,10 +1507,15 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
             >
               
               {/* Question Title */}
-              <div className="mb-2">
+              <div className="mb-2 space-y-1.5">
                 <h2 className="font-display font-medium text-lg sm:text-2xl md:text-3xl leading-tight text-gray-900 tracking-tight max-w-2xl">
                   {currentQuestion.title}
                 </h2>
+                {currentQuestion.helperText && (
+                  <p className="text-xs sm:text-sm text-gray-500 font-sans leading-relaxed">
+                    {currentQuestion.helperText}
+                  </p>
+                )}
               </div>
 
               {/* INPUT TYPE RENDERING */}
