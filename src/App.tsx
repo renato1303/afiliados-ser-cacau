@@ -1343,7 +1343,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
 
               <button
                 type="submit"
-                className="w-full py-4 bg-[#008060] hover:bg-[#00664d] text-white font-display font-medium text-sm tracking-wide rounded-2xl transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-4 bg-black hover:bg-gray-800 text-white font-display font-medium text-sm tracking-wide rounded-2xl transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Acessar Painel</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1464,7 +1464,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
               <div className="space-y-6 max-w-4xl mx-auto w-full px-2">
                 <h1 className="font-display font-semibold text-2xl sm:text-3xl md:text-[2.2rem] text-gray-900 tracking-tight leading-tight max-w-3xl mx-auto">
                   Receba 2 potes de gotas de cacau 100% em casa, com frete grátis.{' '}
-                  <span className="text-[#008060] block sm:inline">
+                  <span className="text-[#C8683B] block sm:inline">
                     Em troca, você bebe uma xícara por dia, mostra nas suas redes e conta como foi
                   </span>
                 </h1>
@@ -1473,13 +1473,13 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
               <div className="flex flex-col items-center justify-center gap-4 pt-2 px-2">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="w-full sm:w-auto px-10 py-4 bg-[#008060] hover:bg-[#00664d] text-white font-semibold text-base sm:text-lg tracking-wide rounded-2xl transition-all group flex items-center justify-center gap-2.5 hover:translate-y-[-1px] active:translate-y-[0px] cursor-pointer shadow-sm"
+                  className="w-full sm:w-auto px-10 py-4 bg-black hover:bg-gray-800 text-white font-semibold text-base sm:text-lg tracking-wide rounded-2xl transition-all group flex items-center justify-center gap-2.5 hover:translate-y-[-1px] active:translate-y-[0px] cursor-pointer shadow-sm"
                   id="btn-start"
                 >
                   <span>Quero me inscrever</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
-                <p className="text-[10px] sm:text-xs font-semibold text-[#008060] font-sans tracking-widest uppercase pt-1">
+                <p className="text-[10px] sm:text-xs font-semibold text-[#C8683B] font-sans tracking-widest uppercase pt-1">
                   Vagas Limitadas
                 </p>
               </div>
@@ -1771,7 +1771,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
                   
                   <button
                     onClick={handleNext}
-                    className="px-6 py-3 bg-[#008060] hover:bg-[#00664d] text-white font-display font-bold text-xs tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+                    className="px-6 py-3 bg-black hover:bg-gray-800 text-white font-display font-bold text-xs tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm"
                     id="btn-next"
                   >
                     <span>{currentStep === totalQuestionsCount ? 'CONCLUIR' : 'AVANÇAR'}</span>
