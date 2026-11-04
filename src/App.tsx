@@ -26,7 +26,7 @@ export default function App() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
-  const [computedRedirectUrl, setComputedRedirectUrl] = useState<string>("https://contato.seracacau.com.br/");
+  const [computedRedirectUrl, setComputedRedirectUrl] = useState<string>("https://agradecimento.seracacau.com.br");
   
   // Booking/Scheduling States
   const [bookedMeeting, setBookedMeeting] = useState<BookedMeeting | null>(null);
@@ -442,7 +442,7 @@ export default function App() {
     
     // Redirect to configured URL in Admin Panel (or default)
     const config: IntegrationConfig = getResolvedIntegrationsConfig();
-    const targetRedirect = config.redirectUrl || "https://contato.seracacau.com.br/";
+    const targetRedirect = config.redirectUrl || "https://agradecimento.seracacau.com.br";
     
     // Build search query parameters with complete lead details so external apps receive all data
     const plainTextMessage = buildFormattedMessageText(safeLead);
@@ -889,33 +889,13 @@ export default function App() {
           ...payload,
           lead: {
             nome: finalLead.nome || '',
-            empresa: finalLead.empresa || '',
             email: finalLead.email || '',
             whatsapp: finalLead.whatsapp || finalLead.telefone || '',
             telefone: finalLead.whatsapp || finalLead.telefone || '',
-            ddd: dddVal,
-            uf: ufVal,
-            estado: estadoVal,
-            regiao: regiaoVal,
-            estado_uf: estadoUfVal,
-            estadoUf: estadoUfVal,
-            localizacao: estadoUfVal ? `${estadoUfVal}${regiaoVal ? ` - ${regiaoVal}` : ''}` : '',
-            Estado: estadoVal,
-            UF: ufVal,
-            DDD: dddVal,
-            'Estado / UF': estadoUfVal,
-            segmento: finalLead.segmento || '',
-            trabalhaComCacau: finalLead.trabalhaComCacau || '',
-            ja_trabalhou_com_cacau: finalLead.trabalhaComCacau || '',
-            faturamento: finalLead.faturamento || '',
-            operacaoComercial: finalLead.operacaoComercial || '',
-            origemLeads: Array.isArray(finalLead.origemLeads) ? finalLead.origemLeads.join(', ') : (finalLead.origemLeads || ''),
-            crm: finalLead.crm || '',
-            desafioPrincipal: finalLead.desafioPrincipal || '',
-            momentoEmpresa: finalLead.momentoEmpresa || '',
-            investimentoMarketing: finalLead.investimentoMarketing || '',
-            equipeComercial: finalLead.equipeComercial || '',
-            prazoInicio: finalLead.prazoInicio || '',
+            endereco: finalLead.endereco || '',
+            instagram: finalLead.instagram || '',
+            'Endereço': finalLead.endereco || '',
+            'Instagram': finalLead.instagram || '',
             leadScore: rawScore,
             percentual: scoreFormatted,
             id: finalLead.id || '',
@@ -924,18 +904,6 @@ export default function App() {
             utmCampaign: finalLead.utmCampaign || '',
             utmContent: finalLead.utmContent || '',
             utmTerm: finalLead.utmTerm || '',
-            anuncio: anuncio,
-            Anuncio: anuncio,
-            'Anúncio': anuncio,
-            conjunto: conjunto,
-            Conjunto: conjunto,
-            'Conjunto de Anúncios': conjunto,
-            campanha: campanha,
-            Campanha: campanha,
-            plataforma: plataforma,
-            Plataforma: plataforma,
-            posicionamento: posicionamento,
-            Posicionamento: posicionamento,
             adId: adId,
             adsetId: adsetId,
             campaignId: campaignId,
@@ -960,14 +928,11 @@ export default function App() {
           },
           // Root-level variables
           nome: finalLead.nome || '',
-          empresa: finalLead.empresa || '',
           email: finalLead.email || '',
           whatsapp: finalLead.whatsapp || finalLead.telefone || '',
           telefone: finalLead.whatsapp || finalLead.telefone || '',
-          ddd: dddVal,
-          uf: ufVal,
-          estado: estadoVal,
-          regiao: regiaoVal,
+          endereco: finalLead.endereco || '',
+          instagram: finalLead.instagram || '',
           estado_uf: estadoUfVal,
           estadoUf: estadoUfVal,
           Estado: estadoVal,

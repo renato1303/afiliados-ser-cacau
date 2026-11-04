@@ -53,7 +53,7 @@ export const DEFAULT_INTEGRATIONS_CONFIG: IntegrationConfig = {
   gtmId: 'GTM-XXXXXXX',
   googleSheetsUrl: 'https://script.google.com/macros/s/AKfycbwJIZHBAOTtLA0gmg3cra0lNoXgHOylwTZGnYxmkJvQw5eKK321mfGd_mle2Bt7A4q0/exec',
   calendlyUrl: 'https://calendly.com/comercial-seracacau/30min',
-  redirectUrl: 'https://contato.seracacau.com.br/',
+  redirectUrl: 'https://agradecimento.seracacau.com.br',
   adminPassword: 'sensesales@admin',
   thankYouVideoUrl: 'https://vimeo.com/1206543972',
   presenterName: 'nosso especialista',
