@@ -1433,7 +1433,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
         {currentStep > 0 && !isCompleted && !isProcessing && (
           <div className="w-full h-[3px] bg-gray-200 rounded-full overflow-hidden transition-all duration-300">
             <div 
-              className="h-full bg-gradient-to-r from-[#008060] to-[#14B8A6] transition-all duration-300"
+              className="h-full bg-[#C8683B] transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -1457,36 +1457,45 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
                 duration: 0.4,
                 ease: [0.16, 1, 0.3, 1]
               }}
-              className="w-full text-center space-y-10 py-8 md:py-20 relative z-10"
+              className="w-full text-center space-y-8 py-8 md:py-16 relative z-10"
               id="welcome-screen"
             >
+              {/* Top Tagline */}
+              <p className="text-xs font-mono font-medium text-[#C8683B] tracking-[0.2em] uppercase select-none">
+                DESAFIO SERÁ CACAU · 28 DIAS
+              </p>
+
               {/* Headline */}
-              <div className="space-y-6 max-w-4xl mx-auto w-full px-2">
-                <h1 className="font-display font-semibold text-2xl sm:text-3xl md:text-[2.2rem] text-gray-900 tracking-tight leading-tight max-w-3xl mx-auto">
-                  Receba 2 potes de gotas de cacau 100% em casa, com frete grátis.{' '}
-                  <span className="text-[#C8683B] block sm:inline">
-                    Em troca, você bebe uma xícara por dia, mostra nas suas redes e conta como foi
+              <div className="space-y-4 max-w-4xl mx-auto w-full px-2">
+                <h1 className="font-display font-normal text-2xl sm:text-3xl md:text-[2.2rem] text-gray-900 tracking-tight leading-tight max-w-3xl mx-auto">
+                  Cacau puro na sua casa por 28 dias, por nossa conta.{' '}
+                  <span className="text-[#C8683B] block sm:inline font-normal">
+                    Você bebe uma xícara por dia e conta como foi.
                   </span>
                 </h1>
+                
+                {/* Description paragraph from image */}
+                <p className="text-sm sm:text-base text-gray-600 font-sans font-light leading-relaxed max-w-2xl mx-auto pt-2">
+                  Você recebe cacau puro, orgânico, com frete grátis. São 15 g por dia, uma xícara, do primeiro ao vigésimo oitavo dia.<br className="hidden sm:inline" />
+                  Em troca, uma foto por dia nas suas redes e 3 vídeos curtos: a caixa chegando, o meio do caminho e o que ficou. Começamos no fim de novembro.
+                </p>
               </div>
-              {/* Principal CTA Button & Subtitle */}
-              <div className="flex flex-col items-center justify-center gap-4 pt-2 px-2">
+
+              {/* Principal CTA Button */}
+              <div className="flex flex-col items-center justify-center gap-4 pt-4 px-2">
                 <button
                   onClick={() => setCurrentStep(1)}
                   className="w-full sm:w-auto px-10 py-4 bg-black hover:bg-gray-800 text-white font-semibold text-base sm:text-lg tracking-wide rounded-2xl transition-all group flex items-center justify-center gap-2.5 hover:translate-y-[-1px] active:translate-y-[0px] cursor-pointer shadow-sm"
                   id="btn-start"
                 >
-                  <span>Quero me inscrever</span>
+                  <span>Quero participar</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
-                <p className="text-[10px] sm:text-xs font-semibold text-[#C8683B] font-sans tracking-widest uppercase pt-1">
-                  Vagas Limitadas
-                </p>
               </div>
 
-              {/* Minor metadata */}
-              <p className="text-[10px] font-mono text-gray-400 tracking-widest select-none uppercase pt-2">
-                Leva menos de 2 minutos • Será Cacau Ritual
+              {/* Footer metadata */}
+              <p className="text-[10px] font-mono text-gray-400 tracking-[0.15em] select-none uppercase pt-4">
+                LEVA MENOS DE 2 MINUTOS · SERÁ CACAU RITUAL
               </p>
             </motion.div>
           )}
@@ -1508,6 +1517,11 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
               
               {/* Question Title */}
               <div className="mb-2 space-y-1.5">
+                {currentQuestion.categoryTag && (
+                  <p className="text-xs font-mono font-medium text-[#C8683B] tracking-[0.15em] uppercase pb-1">
+                    {currentQuestion.categoryTag}
+                  </p>
+                )}
                 <h2 className="font-display font-medium text-lg sm:text-2xl md:text-3xl leading-tight text-gray-900 tracking-tight max-w-2xl">
                   {currentQuestion.title}
                 </h2>
@@ -1774,7 +1788,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
                     className="px-6 py-3 bg-black hover:bg-gray-800 text-white font-display font-bold text-xs tracking-wider rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-sm"
                     id="btn-next"
                   >
-                    <span>{currentStep === totalQuestionsCount ? 'CONCLUIR' : 'AVANÇAR'}</span>
+                    <span>{currentStep === totalQuestionsCount ? 'Concluir →' : 'Avançar →'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -1852,7 +1866,7 @@ Gostaria de falar com o estrategista que me atenderá para adiantar alguns ponto
               <span className="shrink-0 text-[10px] font-mono text-gray-500">{progressPercent}%</span>
               <div className="w-full h-[3px] bg-gray-200 border border-gray-300 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-[#008060] to-[#14B8A6] rounded-full transition-all duration-300"
+                  className="h-full bg-[#C8683B] rounded-full transition-all duration-300"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>

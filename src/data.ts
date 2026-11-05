@@ -68,10 +68,12 @@ export const QUESTIONS_LIST: Question[] = [
     id: 'p8',
     variable: 'compromissoDesafio',
     type: 'select',
-    title: 'Durante 28 dias, o desafio pede 1 foto por dia nas suas redes e 3 vídeos curtos (começo, meio e fim). Você consegue topar?',
+    categoryTag: 'ANTES DE COMEÇAR',
+    title: 'Você quer ter o cacau no seu dia a dia e fazer esse experimento de 28 dias com a gente?',
+    helperText: 'Em troca, 1 foto por dia e 3 vídeos curtos nas suas redes. Sem produção e sem roteiro.',
     options: [
-      'Sim, consigo me comprometer',
-      'Acho que consigo, mas quero ver as regras primeiro'
+      'Sim, quero participar',
+      'Quero ver as regras primeiro'
     ],
     required: true,
   }

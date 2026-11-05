@@ -91,6 +91,7 @@ export interface Question {
   title: string;
   placeholder?: string;
   helperText?: string;
+  categoryTag?: string;
   options?: string[];
   required?: boolean;
   dependsOn?: {
