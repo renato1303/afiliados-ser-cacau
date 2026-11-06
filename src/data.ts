@@ -87,7 +87,7 @@ export const DEFAULT_INTEGRATIONS_CONFIG: IntegrationConfig = {
   metaPixelId: '1378981757464908',
   gaTrackingId: 'G-XXXXXXXXXX',
   gtmId: 'GTM-XXXXXXX',
-  googleSheetsUrl: 'https://script.google.com/macros/s/AKfycbwJIZHBAOTtLA0gmg3cra0lNoXgHOylwTZGnYxmkJvQw5eKK321mfGd_mle2Bt7A4q0/exec',
+  googleSheetsUrl: 'https://script.google.com/macros/s/AKfycbwGV3Yv1BKxqZl4OEI4S4Koew8yKnOOsom0iMkwG8nYJGZZhJaKNqOm4lrrAAXG9kOn/exec',
   calendlyUrl: 'https://calendly.com/comercial-seracacau/30min',
   redirectUrl: 'https://agradecimento.seracacau.com.br',
   adminPassword: 'sensesales@admin',
@@ -103,6 +103,7 @@ export function getResolvedIntegrationsConfig(): IntegrationConfig {
       const parsed = JSON.parse(stored);
       // Auto-migrate previous default URLs to the new active Google Sheets script
       const previousUrls = [
+        'AKfycbwJIZHBAOTtLA0gmg3cra0lNoXgHOylwTZGnYxmkJvQw5eKK321mfGd_mle2Bt7A4q0',
         'AKfycbyJSBeAgSpjnOhdYfHUZbSCSVuAGjuxMrJPjzohtECTipLlDxZsdjWCRv9Rg-NrIu6h',
         'AKfycbwWBZRJxFvksSyLijJhnkk29GOZcFOOIPTPx43K6ttM38sdL-E9XPEA_ZmSxl640mA',
         'AKfycbxv8pRSfIliUoL04yyu6qYk7fDVkhbZrgkCUIRwZH4vgrNPH6anVepkCfV5SYWz6uM',
